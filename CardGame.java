@@ -39,11 +39,11 @@ public class CardGame {
                     // Add the Card object to the list
                     cardList.add(card);
                 } else {
-                    System.err.println("Invalid line format: " + line);
+                    System.err.println("Invalid line format: " + line); // Outputs error message if there is a problem with the current line
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
+            System.err.println("Error reading file: " + e.getMessage()); // Outputs error message if reading file does succeed.
         }
 
         // Print the loaded cards
@@ -51,14 +51,17 @@ public class CardGame {
         cardList.displayList();
 		
 		Card[] playerHand = new Card[5];
+        // Pulls five cards from the deck for the player's hand
 		for(int i = 0; i < playerHand.length; i++)
 			playerHand[i] = cardList.getFirst();
 		
+        // Prints out the cards in the player's hand
 		System.out.println("players hand");
 		for(int i = 0; i < playerHand.length; i++)
 			System.out.println(playerHand[i]);
 		
 		System.out.println();
+        // Prints out the contents of the deck
 		System.out.println("the deck");
 		cardList.displayList();
 
