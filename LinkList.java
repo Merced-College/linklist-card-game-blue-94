@@ -14,7 +14,10 @@ public class LinkList
 		Link newLink = new Link(card);
 		newLink.next = first;       // it points to old first link
 		first = newLink;            // now first points to this
+		
 	}
+
+	// Actually the same function as insertFirst
 	public void add(Card card)
 	{                           // make new link
 		Link newLink = new Link(card);
@@ -25,7 +28,9 @@ public class LinkList
 	public Link find(Card cardToFind)      // find link with given key
 	{                           // (assumes non-empty list)
 		Link current = first;              // start at 'first'
-		while(!current.equals(cardToFind))        // while no match,
+		// CHANGED: use cardLink to accurately compare the card to the Link
+		// Compares the value of the link's associated card with the card that is being searched for 
+		while(!current.cardLink.equals(cardToFind))        // while no match,
 		{
 			if(current.next == null)        // if end of list,
 				return null;                 // didn't find it
@@ -55,6 +60,34 @@ public class LinkList
 			previous.next = current.next;   //    bypass it
 		return current;
 	}
+	//--------------------------------------------------------
+
+	//--------------------------------------------------------
+	// Finds card1, puts card2 in its place. Finds card2 and puts card1 in its place.
+	public void swap(Card card1, Card card2) {
+		Link currLink = first;
+		boolean card1Found = false;
+		boolean card2Found = false;
+
+		while (!card1Found || !card2Found) {
+			
+			if (currLink.cardLink.equals(card1)) {
+				currLink.setCardLink(card2);
+				card1Found = true;
+			}
+
+			else if (currLink.cardLink.equals(card2)) {
+				currLink.setCardLink(card1); // puts card one in card two position
+				card2Found = true;
+			}
+		
+			if (card2Found && card1Found) {
+				return;
+			}
+			currLink = currLink.next;
+		}
+	}
+
 	//-------------------------------------------------------------
 	public void displayList()      // display the list
 	{
@@ -76,36 +109,21 @@ public class LinkList
 		first = first.next;             //    change first
 		return current.cardLink;
 	}
+	
+	public static void main(String[] args) {
+		LinkList theList = new LinkList();
+		Card card1 = new Card("heart", "ace", 11,"ah.gif");
+		Card card2 = new Card("spade", "queen", 11,"ah.gif");
+		Card card3 = new Card("diamond", "two", 2,"ah.gif");
 
-}  // end class LinkList
-////////////////////////////////////////////////////////////////
-/*class LinkedLists
-{
-	public static void main(String[] args)
-	{
-		LinkList theList = new LinkList();  // make list
+		theList.insertFirst(card1);      // insert 4 items
+		theList.insertFirst(card2);
+		theList.add(card3);
 
-		theList.insertFirst(new Card("heart", "ace", 11,"ah.gif"));      // insert 4 items
-		theList.insertFirst(new Card("Spade", "ace", 11,"as.gif"));
-		//theList.insertFirst(66, 6.99);
-		//theList.insertFirst(88, 8.99);
 
 		theList.displayList();              // display list
+		theList.swap(card2, card3);
+		theList.displayList();
 
-		Link f = theList.find(new Card("heart", "ace", 11,"ah.gif"));          // find item
-		if( f != null)
-			System.out.println("Found link with key " + f.cardLink);
-		else
-			System.out.println("Can't find link");
-
-		Link d = theList.delete(new Card("heart", "ace", 11,"ah.gif"));        // delete item
-		if( d != null )
-			System.out.println("Deleted link with key " + d.cardLink);
-		else
-			System.out.println("Can't delete link");
-
-		theList.displayList();              // display list
-	}  // end main()
-}  // end class LinkList2App
-////////////////////////////////////////////////////////////////
-/// */
+	} 
+}

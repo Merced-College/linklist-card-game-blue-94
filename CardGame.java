@@ -8,12 +8,37 @@ import java.io.IOException;
 //import java.util.ArrayList;
 //import java.util.List;
 import java.util.Scanner;
-
+import java.util.Random; // ADDED: used for random shuffling
 
 
 public class CardGame {
 	
 	private static LinkList cardList = new LinkList();  // make list
+
+    public static void shuffle() {
+        String[] suits = {"heart", "space", "club", "diamond"};
+        String[] values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king", "ace"};
+        Random randNum = new Random();
+
+        Card card1 = new Card();
+        Card card2 = new Card();
+        String randSuit1 = "";
+        String randSuit2 = "";
+        String randValue1 = "";
+        String randValue2 = "";
+        while (randSuit1 == randSuit2 && randValue1 == randValue2 || cardList.find(card1) == null || cardList.find(card2) == null) {
+            randSuit1 = suits[randNum.nextInt(4)];
+            randSuit2 = suits[randNum.nextInt(4)];
+            randValue1 = values[randNum.nextInt(14)];
+            randValue2 = values[randNum.nextInt(14)];
+            card1.setCardSuit(randSuit1);
+            card1.setCardName(randValue1);
+            card2.setCardSuit(randSuit2);
+            card2.setCardSuit(randValue2);
+        }
+        
+        // Need to swap the two cards
+    }
 
 	public static void main(String[] args) {
 
