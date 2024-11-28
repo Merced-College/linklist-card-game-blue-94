@@ -28,14 +28,18 @@ public class LinkList
 	public Link find(Card cardToFind)      // find link with given key
 	{                           // (assumes non-empty list)
 		Link current = first;              // start at 'first'
-		// CHANGED: use cardLink to accurately compare the card to the Link
-		// Compares the value of the link's associated card with the card that is being searched for 
-		while(!current.cardLink.equals(cardToFind))        // while no match,
+
+		// CHANGED: uses current.cardLink.equalSuitName() rather than current.equal() to accurately compare the card to the Link
+		// Compares the value of the Link's associated card with the card that is being searched for 
+		// CHANGED: uses equalSuitName so picture name and value are not needed to search. Every card with a suit and name are unique.
+		while(!current.cardLink.equalSuitName(cardToFind))        // while no match,
 		{
-			if(current.next == null)        // if end of list,
-				return null;                 // didn't find it
-			else                            // not end of list,
+			if (current.next == null) { // if end of list,
+				return null;          	// didn't find it   
+			}     
+			else {                           // not end of list,
 				current = current.next;      // go to next link
+			}
 		}
 		return current;                    // found it
 	}
@@ -71,12 +75,12 @@ public class LinkList
 
 		while (!card1Found || !card2Found) {
 			
-			if (currLink.cardLink.equals(card1)) {
+			if (currLink.cardLink.equalSuitName(card1)) {
 				currLink.setCardLink(card2);
 				card1Found = true;
 			}
 
-			else if (currLink.cardLink.equals(card2)) {
+			else if (currLink.cardLink.equalSuitName(card2)) {
 				currLink.setCardLink(card1); // puts card one in card two position
 				card2Found = true;
 			}
@@ -109,21 +113,19 @@ public class LinkList
 		first = first.next;             //    change first
 		return current.cardLink;
 	}
-	
+	/* 
 	public static void main(String[] args) {
 		LinkList theList = new LinkList();
 		Card card1 = new Card("heart", "ace", 11,"ah.gif");
 		Card card2 = new Card("spade", "queen", 11,"ah.gif");
 		Card card3 = new Card("diamond", "two", 2,"ah.gif");
-
-		theList.insertFirst(card1);      // insert 4 items
-		theList.insertFirst(card2);
+		Card card4 = new Card();
+		theList.add(card1);
+		theList.add(card2);
 		theList.add(card3);
-
-
-		theList.displayList();              // display list
-		theList.swap(card2, card3);
-		theList.displayList();
-
-	} 
+		card4.setCardName("two");
+		card4.setCardSuit("diamond");
+		System.out.println(theList.find(card4));
+		System.out.println(theList.find(new Card("spade", "two", 2,"ah.gif")));
+	} */
 }

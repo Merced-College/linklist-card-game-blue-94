@@ -1,3 +1,7 @@
+// Jeremiah Tenn
+// Added equalSuitName() method, which is an alternate comparison method for objects that have only a suit and a name.
+// Considering the nature of the cards, every card with a suit and name are unique.
+
 //package cardGame;
 
 public class Card {
@@ -16,7 +20,7 @@ public class Card {
     }
 
     // Non-default constructor
-    // Assignts the Card object with a given name and value
+    // Assigns the Card object with a given name and value
     public Card(String name, int value) {
         cardName = name;
         cardValue = value;
@@ -85,6 +89,19 @@ public class Card {
                cardName.equals(otherCard.cardName) && 
                cardSuit.equals(otherCard.cardSuit) && 
                cardPic.equals(otherCard.cardPic);
+    }
+
+    // ADDED: alternate comparison method. Requires only suit and name to compare, since these are unique per card.
+    // Used mainly for shuffling
+    public boolean equalSuitName(Object obj) {
+        if (this == obj) {  // Same as in equals(): returns true of same object
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;   // Same as in equals(): returns false if its null or diff class
+        }
+        Card otherCard = (Card) obj;    // Converts the object to a Card
+        return cardSuit.equals(otherCard.cardSuit) && cardName.equals(otherCard.cardName);  // If the suit and name are the same return true if different return false
     }
 
     // toString method for printing the card

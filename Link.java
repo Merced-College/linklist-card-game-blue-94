@@ -18,7 +18,7 @@ public class Link
 		System.out.println(cardLink);
 	}
 
-	public void setCardLink(Card card) { // ADDED: to change the associated card for shuffling
+	public void setCardLink(Card card) { // ADDED: to change the card associated with the link, used for shuffling (swapping)
 		cardLink = card;
 	}
 }  // end class Link

@@ -16,28 +16,41 @@ public class CardGame {
 	private static LinkList cardList = new LinkList();  // make list
 
     public static void shuffle() {
-        String[] suits = {"heart", "space", "club", "diamond"};
+        // ADDED: arrays of strings for the suits and values. a random integer will be generated and will access one from each array
+        String[] suits = {"heart", "spade", "club", "diamond"};
         String[] values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king", "ace"};
+        // Initialize random object for shuffling
         Random randNum = new Random();
 
-        Card card1 = new Card();
-        Card card2 = new Card();
-        String randSuit1 = "";
-        String randSuit2 = "";
-        String randValue1 = "";
-        String randValue2 = "";
-        while (randSuit1 == randSuit2 && randValue1 == randValue2 || cardList.find(card1) == null || cardList.find(card2) == null) {
-            randSuit1 = suits[randNum.nextInt(4)];
-            randSuit2 = suits[randNum.nextInt(4)];
-            randValue1 = values[randNum.nextInt(14)];
-            randValue2 = values[randNum.nextInt(14)];
-            card1.setCardSuit(randSuit1);
-            card1.setCardName(randValue1);
+        // Swaps a pair of cards 52 times; emulates the shuffling of the deck
+        for (int i = 0; i < 52; ++i) {  // There are 52 cards in the deck so this value is used
+            Card card1 = new Card();    // Creates two card objects that will represent the two cards that will be swapped
+            Card card2 = new Card();
+            String randSuit1 = "";      // Sets up default values for Suit and Name for the two Card Ovjwxra
+            String randSuit2 = "";
+            String randName1 = "";
+            String randName2 = "";
+            card1.setCardSuit(randSuit1);   // Assignts the default blank values, otherwise a null pointer exception error will occur
+            card1.setCardName(randName1);
             card2.setCardSuit(randSuit2);
-            card2.setCardSuit(randValue2);
+            card2.setCardName(randName2);
+
+            // Keep on generating cards when suite and number is the same or if the cards are not in the deck.
+            while (card1.equalSuitName(card2) || cardList.find(card1) == null || cardList.find(card2) == null) {
+                // Generates a random number between 0 and the length of the arrays; sets the corresponding string to the Card objects
+                randSuit1 = suits[randNum.nextInt(4)];
+                randSuit2 = suits[randNum.nextInt(4)];
+                randName1 = values[randNum.nextInt(14)];
+                randName2 = values[randNum.nextInt(14)];
+                card1.setCardSuit(randSuit1);
+                card1.setCardName(randName1);
+                card2.setCardSuit(randSuit2);
+                card2.setCardName(randName2);
+            }
+
+            // Performs the swap between the two cards; card 1 is in card 2's Link, and vice versa
+            cardList.swap(card1, card2);
         }
-        
-        // Need to swap the two cards
     }
 
 	public static void main(String[] args) {
@@ -89,6 +102,10 @@ public class CardGame {
         // Prints out the contents of the deck
 		System.out.println("the deck");
 		cardList.displayList();
+
+        shuffle();
+        System.out.println("Shuffled!!!!!!!!");
+        cardList.displayList();
 
 	}//end main
 
