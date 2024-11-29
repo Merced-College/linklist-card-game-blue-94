@@ -1,3 +1,8 @@
+// Jeremiah Tenn
+
+// Added a swap method which swaps the associated Card objects for two specified Links.
+// Changed find(), using !current.cardLink.equalSuitName(cardToFind) rather than !current.cardLink.equals(cardToFind)
+// Change made because we are comparing the associated Card object (cardLink), not the Link itself.
 
 public class LinkList
 {
@@ -68,26 +73,38 @@ public class LinkList
 
 	//--------------------------------------------------------
 	// Finds card1, puts card2 in its place. Finds card2 and puts card1 in its place.
-	public void swap(Card card1, Card card2) {
-		Link currLink = first;
-		boolean card1Found = false;
+	public void swap(Card card1, Card card2) 
+	{
+		Link currLink = first;		// Assigns currLink to the first object in the LinkList
+		
+		// booleans are false - will be true once the Link has been find
+		boolean card1Found = false; 
 		boolean card2Found = false;
 
-		while (!card1Found || !card2Found) {
+		// while card1 and card2 have not been found continue in the loop
+		while (!card1Found || !card2Found) 
+		{
 			
-			if (currLink.cardLink.equalSuitName(card1)) {
+			// If the cardLink in the current Link is the same as card1, change the cardLink to card2 and make the boolean true (since found)
+			if (currLink.cardLink.equalSuitName(card1)) 
+			{
 				currLink.setCardLink(card2);
 				card1Found = true;
 			}
 
-			else if (currLink.cardLink.equalSuitName(card2)) {
+			// If the cardLink is same as card2, change it to card1 and make the boolean true
+			else if (currLink.cardLink.equalSuitName(card2)) 
+			{
 				currLink.setCardLink(card1); // puts card one in card two position
 				card2Found = true;
 			}
-		
-			if (card2Found && card1Found) {
+			
+			// If both booleans are true (both have been found), return (exit method)
+			if (card2Found && card1Found) 
+			{
 				return;
 			}
+			// Otherwise move on to the next Link
 			currLink = currLink.next;
 		}
 	}
