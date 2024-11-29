@@ -1,4 +1,5 @@
 // Jeremiah Tenn
+
 // Added equalSuitName() method, which is an alternate comparison method for objects that have only a suit and a name.
 // Considering the nature of the cards, every card with a suit and name are unique.
 
