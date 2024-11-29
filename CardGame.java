@@ -67,7 +67,6 @@ public class CardGame {
         for (int i = 0; i < 10; ++i) {
             System.out.println("\nGuess the suit or name:");
             Card drawnCard = cardList.getFirst();   // Pull the next card from the deck
-            System.out.println(drawnCard);
             answer = scanner.nextLine();            // Get the player's guess
 
             // If correct suit is guessed tell the player that and incremnt their points by 1
@@ -85,7 +84,7 @@ public class CardGame {
                 System.out.println("Sorry, that was not the suit or the name of the card");
             }
             // Tell the player what the card was and their amount of points
-            System.out.println("Card was " + drawnCard.getCardName() + " of " + drawnCard.getCardSuit() + "s");
+            System.out.println("Card was " + drawnCard.getCardName() + " of " + drawnCard.getCardSuit());
             System.out.println("Points: " + points);
         }
 
