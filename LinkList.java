@@ -72,7 +72,7 @@ public class LinkList
 	//--------------------------------------------------------
 
 	//--------------------------------------------------------
-	// Finds card1, puts card2 in its place. Finds card2 and puts card1 in its place.
+	// ADDED: Finds card1, puts card2 in its place. Finds card2 and puts card1 in its place.
 	public void swap(Card card1, Card card2) 
 	{
 		Link currLink = first;		// Assigns currLink to the first object in the LinkList
