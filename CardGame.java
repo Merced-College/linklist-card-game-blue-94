@@ -23,7 +23,7 @@ import java.util.Random; // ADDED: used for random shuffling
 
 public class CardGame {
 	
-	private static LinkList cardList = new LinkList();  // make list
+    private static LinkList cardList = new LinkList();  // make list
     // ADDED: arrays of strings for the suits and values. a random integer will be generated and will access one from each array for shuffling
     // Also used for checking player guesses
     public static String[] suits = {"heart", "spade", "club", "diamond"};        
@@ -94,6 +94,7 @@ public class CardGame {
 
     }
 
+    // ADDED: shuffling method
     public static void shuffle() {
 
         // Initialize random object for shuffling
@@ -134,9 +135,9 @@ public class CardGame {
         }
     }
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		// File name to read from
+	// File name to read from
         String fileName = "cards.txt"; // Ensure the file is in the working directory or specify the full path
 
         // Read the file and create Card objects
@@ -168,6 +169,6 @@ public class CardGame {
         shuffle();                          // Shuffle the deck before playing the game
 		Card[] playerHand = new Card[10];   // Initialize the player's hand
         game(playerHand);                   // Start the game using the declared playerHand array
-	}//end main
+       }//end main
 
 }//end class
