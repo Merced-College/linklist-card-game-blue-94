@@ -1,3 +1,8 @@
+// Jeremiah Tenn
+
+// Added setCardLink method to change the Card associated with the Link object. 
+// Used for swapping in shuffling.
+
 //package linkedLists;
 //linkList2.java
 //demonstrates linked list
@@ -17,8 +22,9 @@ public class Link
 	{
 		System.out.println(cardLink);
 	}
-
-	public void setCardLink(Card card) { // ADDED: to change the card associated with the link, used for shuffling (swapping)
+	//-------------------------------------------------------------
+	public void setCardLink(Card card) // ADDED: to change the card associated with the link, used for shuffling (swapping)
+	{	
 		cardLink = card;
 	}
 }  // end class Link
