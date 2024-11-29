@@ -1,3 +1,13 @@
+// Jeremiah Tenn
+
+// Added shuffling method and a game method that allows the player to guess 10 drawn cards given a hand of 10 cards
+// Deleted some of the in main for displaying the deck
+// The shuffle method uses a LinkList method I implemented in the LinkList class called swap(), switches the positions of two cards.
+// In order for some of the card comparisons to work, I implemented a compareSuitName method in Card, 
+// which compares two the suit and name of two Card objects. This works because any are with a suit and name has no duplicate in a standard deck
+// Changed find() in LinkList to compare the cardLink with cardToFind(), because we are comparing the Card objects, not the Link with the Card.
+// Added a setCardLink() method to the Link class to change the associated Card object for the Link. This is used in swapping cards during shuffling.
+
 //package linkedLists;
 
 import java.io.BufferedReader;
@@ -19,52 +29,69 @@ public class CardGame {
     public static String[] suits = {"heart", "spade", "club", "diamond"};        
     public static String[] values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king", "ace"};
 
-    public static void game(Card[] playerHand) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Your cards:");
+    // ADDED: game method which contains the code for the cardguessing game
+    public static void game(Card[] playerHand) {    // Uses the hand array declared in main
+        Scanner scanner = new Scanner(System.in);   // Sets up the scanner
+        String answer = "";                         // Declares a blank answer string for the player's answer 
+        int points = 0;                             // Player's points initialized to zero
+
+        System.out.println("Your cards:");        // Draws 10 cards and adds them to the hand, also prints them out
         for (int i = 0; i < 10; ++i) {
             playerHand[i] = cardList.getFirst();
-            System.out.println(playerHand[i]);
+            System.out.println(playerHand[i].getCardName() + " of " + playerHand[i].getCardSuit());
         }
-        System.out.println("Do you want instructions? yes/no");
-        String answer = "";
-        int points = 0;
-        while(!answer.equals("yes") || !answer.equals("no")) {
-            answer = scanner.nextLine();
-            if (answer.equals("yes")) {
-                System.out.println("\n10 cards will be drawn: using the drawn ten cards, guess the suit or name for new card!");
+        System.out.println("\nDo you want instructions? yes/no");   // Asks the player if they want instructions
+        
+        // Keeps on prompting an answer as long as the answer is not yes or no
+        while(!answer.equals("yes") && !answer.equals("no")) {
+            answer = scanner.nextLine();    // Get input
+
+            // If yes, output the instructions and then break out of the loop
+            if (answer.equals("yes")) { 
+                System.out.println("\n10 cards will be drawn: using the drawn ten cards and your hand of 10 cards, guess the suit or name for the next card!");
                 System.out.println("Correct answers for name will gain 5 points and correct answers for suit will gain 1");
                 System.out.println("Please enter answers in lowercase, with numbers written as words (e.g. one, two , three)");
                 break;
             }
+            // If no, immediately break out of the loop
             else if (answer.equals("no")) {
                 break;
             }
+            // If not yes or no, tell the user that the answer is invalid and the while loop gives them the prompt again
             else {
                 System.out.println("\nPlease enter a valid answer (yes/no)");
             }            
         }
 
+        // The guessing game, 10 cards will be guessed so the loop will run 10 times
         for (int i = 0; i < 10; ++i) {
             System.out.println("\nGuess the suit or name:");
-            Card drawnCard = cardList.getFirst();
+            Card drawnCard = cardList.getFirst();   // Pull the next card from the deck
             System.out.println(drawnCard);
-            answer = scanner.nextLine();
+            answer = scanner.nextLine();            // Get the player's guess
 
+            // If correct suit is guessed tell the player that and incremnt their points by 1
             if (answer.equals(drawnCard.getCardSuit())) {
                 System.out.println("Correct suit guessed! Card added to hard. You gained 1 point");
                 points += 1;
             }
+            // If correct name is guessed tell the player and add five to points
             else if (answer.equals(drawnCard.getCardName())) {
                 System.out.println("Correct name guessed! You gained 5 points");
                 points += 5;
             }
+            // If both are incorrect tell the player so
+            else {
+                System.out.println("Sorry, that was not the suit or the name of the card");
+            }
+            // Tell the player what the card was and their amount of points
             System.out.println("Card was " + drawnCard.getCardName() + " of " + drawnCard.getCardSuit() + "s");
-            //playerHand[playerHand.length] = drawnCard;
+            System.out.println("Points: " + points);
         }
-        System.out.println("GAME ENDED THANK YOU");
-        System.out.println(points);
-        scanner.close();
+
+        System.out.println("GAME ENDED - THANK YOU FOR PLAYING");   // Thank the player for playing
+        System.out.println("Final points: " + points);  // Output the final points
+        scanner.close();    // Close scanner since it will no longer be used
 
     }
 
@@ -74,7 +101,7 @@ public class CardGame {
         Random randNum = new Random();
 
         // Swaps a pair of cards 52 times; emulates the shuffling of the deck
-        for (int i = 0; i < 52; ++i) {  // There are 52 cards in the deck so this value is used
+        for (int i = 0; i < 104; ++i) {  // There are 52 cards in the deck so twice the value is used for a thorough shuffle
             Card card1 = new Card();    // Creates two card objects that will represent the two cards that will be swapped
             Card card2 = new Card();
             String randSuit1 = "";      // Sets up default values for Suit and Name for the two Card Ovjwxra
@@ -88,11 +115,15 @@ public class CardGame {
 
             // Keep on generating cards when suite and number is the same or if the cards are not in the deck.
             while (card1.equalSuitName(card2) || cardList.find(card1) == null || cardList.find(card2) == null) {
-                // Generates a random number between 0 and the length of the arrays; sets the corresponding string to the Card objects
+                // Generates a random number between 0 and 4 for a random suit string
                 randSuit1 = suits[randNum.nextInt(4)];
-                randSuit2 = suits[randNum.nextInt(4)];
+                randSuit2 = suits[randNum.nextInt(4)];  
+
+                // Generates a random number between 0 and 14 for a random name string
                 randName1 = values[randNum.nextInt(14)];
                 randName2 = values[randNum.nextInt(14)];
+
+                // Sets the randon suits and names to their respective Card objects
                 card1.setCardSuit(randSuit1);
                 card1.setCardName(randName1);
                 card2.setCardSuit(randSuit2);
@@ -134,16 +165,10 @@ public class CardGame {
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage()); // Outputs error message if reading file does succeed.
         }
-
-        // Print the loaded cards
-        System.out.println("Cards loaded:");
-        cardList.displayList();
-        shuffle();
-		
-        
-		Card[] playerHand = new Card[10];
- 
-        game(playerHand);
+       
+        shuffle();                          // Shuffle the deck before playing the game
+		Card[] playerHand = new Card[10];   // Initialize the player's hand
+        game(playerHand);                   // Start the game using the declared playerHand array
 	}//end main
 
 }//end class
