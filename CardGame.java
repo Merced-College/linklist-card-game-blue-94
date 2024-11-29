@@ -167,7 +167,7 @@ public class CardGame {
         }
        
         shuffle();                          // Shuffle the deck before playing the game
-		Card[] playerHand = new Card[10];   // Initialize the player's hand
+	Card[] playerHand = new Card[10];   // Initialize the player's hand
         game(playerHand);                   // Start the game using the declared playerHand array
        }//end main
 
